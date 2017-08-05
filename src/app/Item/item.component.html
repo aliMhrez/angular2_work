@@ -1,0 +1,14 @@
+<h2>
+  No. Items = {{items.length}}
+</h2>
+
+<input type="text" #itemText1>
+<input type="text" #itemText2>
+<input type="text" #itemText3>
+<button (click)="addNewItem(itemText1.value,itemText2.value,itemText3.value)"> new Item</button>
+<ol>
+    <div class="leftA" *ngFor="let item of items">
+      {{item.toString()}}
+      <a href="#" (click)="removeItem(item)">  (X) </a>
+    </div>
+</ol>
