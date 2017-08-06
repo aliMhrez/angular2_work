@@ -24,6 +24,16 @@ export class ItemComponent implements OnInit {
 
   removeItem(item: Item) {
     this.items = this.items.filter(  t => t !== item);
+
+    let new_total: number = 0;
+
+    let val = (<HTMLInputElement>document.getElementById('Total')).value;
+
+    // alert(item);
+
+    new_total = parseInt(val, 10) - (item.price * item.quantity);
+
+    (<HTMLInputElement>document.getElementById('Total')).value = new_total + '';
   }
 
   addNewItem(name: string, quantity: number, price: number) {
@@ -67,12 +77,12 @@ export class ItemComponent implements OnInit {
       bool = false;
     }
 
-    if (quantity < 0 || quantity > 20) {
+    if (quantity < 1 || quantity > 20) {
       document.getElementById('error2').hidden = false;
       bool = false;
     }
 
-    if (price < 0) {
+    if (price < 1) {
       document.getElementById('error3').hidden = false;
       bool = false;
     }
@@ -82,6 +92,14 @@ export class ItemComponent implements OnInit {
       document.getElementById('error1').hidden = true;
       document.getElementById('error2').hidden = true;
       document.getElementById('error3').hidden = true;
+
+      let val = 0;
+
+      for (let item of this.items) {
+        val = (item.price * item.quantity) + val;
+      }
+
+      (<HTMLInputElement>document.getElementById('Total')).value = val + '';
     }
   }
 
