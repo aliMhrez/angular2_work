@@ -3,9 +3,12 @@
 </h2>
 
 <input type="text" #itemText1>
-<input type="text" #itemText2>
-<input type="text" #itemText3>
-<button (click)="addNewItem(itemText1.value,itemText2.value,itemText3.value)"> new Item</button>
+<input type="number" #itemText2>
+<input type="number" #itemText3>
+<button (click)="validate(itemText1.value,itemText2.value,itemText3.value)"> new Item</button>
+<div class="error" id="error1" hidden="true" style="color: red">error in name</div>
+<div class="error" id="error2" hidden="true" style="color: red">error in quantity</div>
+<div class="error" id="error3" hidden="true" style="color: red">error in price</div>
 <ol>
     <div class="leftA" *ngFor="let item of items">
       {{item.toString()}}
