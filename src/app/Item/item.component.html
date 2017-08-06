@@ -1,17 +1,29 @@
-<h2>
-  No. Items = {{items.length}}
-</h2>
-
-<input type="text" #itemText1>
-<input type="number" #itemText2>
-<input type="number" #itemText3>
-<button (click)="validate(itemText1.value,itemText2.value,itemText3.value)"> new Item</button>
-<div class="error" id="error1" hidden="true" style="color: red">error in name</div>
-<div class="error" id="error2" hidden="true" style="color: red">error in quantity</div>
-<div class="error" id="error3" hidden="true" style="color: red">error in price</div>
-<ol>
-    <div class="leftA" *ngFor="let item of items">
+<h1>
+  <small>
+    &nbsp;&nbsp;&nbsp; No. Items = {{items.length}}
+  </small>
+</h1>
+<div class="form-group">
+<div class="col-xs-3">
+  <input type="text" #itemText1 id="name" class="form-control" placeholder="name">
+  <label for="name" class="error" id="error1" hidden="true" style="color: red">error in name</label>
+</div>
+<div class="col-xs-3">
+  <input type="number" min="0" id="quantity" max="20" #itemText2 class="form-control" placeholder="quantity">
+  <label for="quantity" class="error" id="error2" hidden="true" style="color: red">error in quantity</label>
+</div>
+<div class="col-xs-3">
+  <input type="number" #itemText3 id="price" class="form-control" placeholder="price">
+  <label for="price" class="error" id="error3" hidden="true" style="color: red">error in price</label>
+</div>
+<div>
+<button (click)="validate(itemText1.value,itemText2.value,itemText3.value)" class="btn btn-primary"> new Item</button>
+</div>
+</div>
+<br>
+<ul>
+    <li class="list-group-item list-group-item-success" *ngFor="let item of items">
       {{item.toString()}}
       <a href="#" (click)="removeItem(item)">  (X) </a>
-    </div>
-</ol>
+    </li>
+</ul>

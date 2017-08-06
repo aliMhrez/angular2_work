@@ -7,8 +7,6 @@ export class ItemService {
 
   getItems() {
     const items: Item[] = [];
-
-    items.push(new Item('sugar', 1, 2));
     return items;
   }
 
