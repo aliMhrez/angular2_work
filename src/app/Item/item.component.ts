@@ -18,9 +18,40 @@ export class ItemComponent implements OnInit {
 
   }
 
-//   completeAll(checked:boolean) {
-//     this.tasks.forEach( task => task.setCompleted(checked))
-//   }
+  validate_name(value: string) {
+    const a = value.match('^([^0-9]*)$');
+    if (value === '' || a === null || value.length < 3) {
+      document.getElementById('error1').hidden = false;
+      return false;
+    } else {
+      document.getElementById('error1').hidden = true;
+      return true;
+    }
+  }
+
+  validate_quantity(value: string) {
+    const quantity = parseInt(value, 10);
+
+    if (value === '' || quantity < 1 || quantity > 20) {
+      document.getElementById('error2').hidden = false;
+      return false;
+    } else {
+      document.getElementById('error2').hidden = true;
+      return true;
+    }
+  }
+
+  validate_price(value: string) {
+    const price = parseInt(value, 10);
+
+    if (value === '' || price < 1) {
+      document.getElementById('error3').hidden = false;
+      return false;
+    } else {
+      document.getElementById('error3').hidden = true;
+      return true;
+    }
+  }
 
   removeItem(item: Item) {
     this.items = this.items.filter(  t => t !== item);
@@ -41,53 +72,10 @@ export class ItemComponent implements OnInit {
   }
 
   validate(name: string, quant: string, pri: string) {
-    const a = name.match('^([^0-9]*)$');
-    // alert(name);
-    // alert(quantity === '');
-    // alert(price);
-
-    if (name === '') {
-      document.getElementById('error1').hidden = false;
-      return;
-    } else {
-      document.getElementById('error1').hidden = true;
-    }
-
-    if (quant === '') {
-      document.getElementById('error2').hidden = false;
-      return;
-    } else {
-      document.getElementById('error2').hidden = true;
-    }
-
-    if (pri === '') {
-      document.getElementById('error3').hidden = false;
-      return;
-    } else {
-      document.getElementById('error3').hidden = true;
-    }
-
     const quantity = parseInt(quant, 10);
     const price = parseInt(pri, 10);
 
-    let bool = true;
-
-    if (a === null || name.length < 3) {
-      document.getElementById('error1').hidden = false;
-      bool = false;
-    }
-
-    if (quantity < 1 || quantity > 20) {
-      document.getElementById('error2').hidden = false;
-      bool = false;
-    }
-
-    if (price < 1) {
-      document.getElementById('error3').hidden = false;
-      bool = false;
-    }
-
-    if (bool) {
+    if (this.validate_name(name) && this.validate_quantity(quant) && this.validate_price(pri)) {
       this.addNewItem(name, quantity, price);
       document.getElementById('error1').hidden = true;
       document.getElementById('error2').hidden = true;
@@ -102,11 +90,4 @@ export class ItemComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('Total')).value = val + '';
     }
   }
-
-//   handleKeyUp(ev) {
-//     if (ev.which === 13){
-//       this.addNewTask(ev.target.value);
-//       ev.target.value = ''
-//     }
-//   }
 }
