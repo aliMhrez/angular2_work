@@ -10,8 +10,16 @@ import { ItemService } from '../services/item.service';
 })
 export class ItemComponent implements OnInit {
   items: Item[] = [];
+  total: number;
+  error1: string;
+  error2: string;
+  error3: string;
   constructor( private dataSerive: ItemService) {
     this.items = dataSerive.getItems();
+    this.total = 0;
+    this.error1 = '';
+    this.error2 = '';
+    this.error3 = '';
   }
 
   ngOnInit() {
@@ -21,11 +29,9 @@ export class ItemComponent implements OnInit {
   validate_name(value: string) {
     const a = value.match('^([^0-9]*)$');
     if (value === '' || a === null || value.length < 3) {
-      document.getElementById('error1').hidden = false;
-      return false;
+      this.error1 = 'At least three characters without numbers';
     } else {
-      document.getElementById('error1').hidden = true;
-      return true;
+      this.error1 = '';
     }
   }
 
@@ -33,11 +39,9 @@ export class ItemComponent implements OnInit {
     const quantity = parseInt(value, 10);
 
     if (value === '' || quantity < 1 || quantity > 20) {
-      document.getElementById('error2').hidden = false;
-      return false;
+      this.error2 = 'Number between 1 and 20';
     } else {
-      document.getElementById('error2').hidden = true;
-      return true;
+      this.error2 = '';
     }
   }
 
@@ -45,26 +49,16 @@ export class ItemComponent implements OnInit {
     const price = parseInt(value, 10);
 
     if (value === '' || price < 1) {
-      document.getElementById('error3').hidden = false;
-      return false;
+      this.error3 = 'Number greater than 1';
     } else {
-      document.getElementById('error3').hidden = true;
-      return true;
+      this.error3 = '';
     }
   }
 
   removeItem(item: Item) {
     this.items = this.items.filter(  t => t !== item);
 
-    let new_total: number = 0;
-
-    let val = (<HTMLInputElement>document.getElementById('Total')).value;
-
-    // alert(item);
-
-    new_total = parseInt(val, 10) - (item.price * item.quantity);
-
-    (<HTMLInputElement>document.getElementById('Total')).value = new_total + '';
+    this.total -= (item.quantity * item.price);
   }
 
   addNewItem(name: string, quantity: number, price: number) {
@@ -75,19 +69,10 @@ export class ItemComponent implements OnInit {
     const quantity = parseInt(quant, 10);
     const price = parseInt(pri, 10);
 
-    if (this.validate_name(name) && this.validate_quantity(quant) && this.validate_price(pri)) {
+    if (this.error1 === '' && this.error2 === '' && this.error3 === '' && name !== '') {
       this.addNewItem(name, quantity, price);
-      document.getElementById('error1').hidden = true;
-      document.getElementById('error2').hidden = true;
-      document.getElementById('error3').hidden = true;
 
-      let val = 0;
-
-      for (let item of this.items) {
-        val = (item.price * item.quantity) + val;
-      }
-
-      (<HTMLInputElement>document.getElementById('Total')).value = val + '';
+      this.total += (price * quantity);
     }
   }
 }

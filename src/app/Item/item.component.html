@@ -8,29 +8,33 @@
   <div class="col-xs-3">
     <input type="text" #itemText1 id="name" class="form-control" placeholder="name" 
     (keyup)="validate_name(itemText1.value)">
-    <label for="name" class="error" id="error1" hidden="true" style="color: red">
-      At least three characters without numbers</label>
+    <label for="name" style="color: red">{{error1}}</label>
   </div>
+
   <div class="col-xs-3">
     <input type="number" id="quantity" #itemText2 class="form-control" placeholder="quantity"
     (keyup)="validate_quantity(itemText2.value)">
-    <label for="quantity" class="error" id="error2" hidden="true" style="color: red">
-      Number between 1 and 20</label>
+    <label for="quantity" style="color: red">{{error2}}</label>
   </div>
+
   <div class="col-xs-3">
     <input type="number" #itemText3 id="price" class="form-control" placeholder="price"
     (keyup)="validate_price(itemText3.value)">
-    <label for="price" class="error" id="error3" hidden="true" style="color: red">
-      Number greater than 1</label>
+    <label for="price" style="color: red">{{error3}}</label>
   </div>
+
   <div class="col-xs-1">
-    <input class="form-control" id="Total" type="text" placeholder="Total" disabled>
+    <input class="form-control" id="Total" type="text" placeholder="Total" value="{{total}}" disabled>
   </div>
+
   <div>
     <button (click)="validate(itemText1.value,itemText2.value,itemText3.value)" class="btn btn-primary"> new Item</button>
   </div>
+
 </div>
+
 <br>
+
 <div class="container">
   <table class="table">
     <thead>
